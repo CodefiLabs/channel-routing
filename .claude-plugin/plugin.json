@@ -1,0 +1,10 @@
+{
+  "name": "conductor",
+  "version": "0.1.0",
+  "description": "Orchestrate multiple Claude Code tmux sessions via Telegram channel with AI-powered message routing.",
+  "author": {
+    "name": "Kevin Kirchner"
+  },
+  "license": "MIT",
+  "keywords": ["telegram", "tmux", "orchestrator", "session-management", "channel"]
+}

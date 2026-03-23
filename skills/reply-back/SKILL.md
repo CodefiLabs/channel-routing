@@ -1,12 +1,12 @@
 ---
-name: Conductor Reply-Back
-description: Auto-activates in child conductor sessions to enable replying to Telegram. Detects when CONDUCTOR_SLUG and CONDUCTOR_CHAT_ID environment variables are present.
-version: 0.1.0
+name: Channel Routing Reply-Back
+description: Auto-activates in child channel-routing sessions to enable replying to Telegram. Detects when CR_SLUG and CR_CHAT_ID environment variables are present.
+version: 0.2.0
 ---
 
 # Reply-Back to Telegram
 
-You are running as a child session managed by the conductor orchestrator. When you have results, findings, or responses to share with the user, send them back to Telegram.
+You are running as a child session managed by the channel router. When you have results, findings, or responses to share with the user, send them back to Telegram.
 
 ## When to Reply
 
@@ -27,7 +27,7 @@ This sends your message to the Telegram chat where the original request came fro
 
 ## Activation Check
 
-This skill activates when the environment variables `CONDUCTOR_SLUG` and `CONDUCTOR_CHAT_ID` are set. These are injected by the conductor when spawning your session.
+This skill activates when the environment variables `CR_SLUG` and `CR_CHAT_ID` are set. These are injected by the channel router when spawning your session.
 
 If these variables are not present, this skill does not apply.
 

@@ -52,7 +52,7 @@ Template for asking:
 
 ## Message Logging Format
 
-Every routed or spawned message gets logged to `~/.conductor/messages.jsonl`:
+Every routed or spawned message gets logged to `~/.channel-routing/messages.jsonl`:
 
 ```json
 {"id": 83, "from": "user", "session": "fix-auth-bug", "text": "Fix the auth middleware", "ts": "2026-03-21T16:05:00Z"}

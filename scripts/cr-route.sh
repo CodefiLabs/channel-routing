@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# conductor-route.sh — Inject a message into a child tmux session
-# Usage: conductor-route.sh <slug> <message>
+# cr-route.sh — Inject a message into a child tmux session
+# Usage: cr-route.sh <slug> <message>
 
-SLUG="${1:?Usage: conductor-route.sh <slug> <message>}"
+SLUG="${1:?Usage: cr-route.sh <slug> <message>}"
 shift
 MESSAGE="$*"
 
-TMUX_SESSION="conductor-${SLUG}"
+TMUX_SESSION="cr-${SLUG}"
 
 # Verify session exists
 if ! tmux has-session -t "$TMUX_SESSION" 2>/dev/null; then
@@ -29,6 +29,6 @@ rm -f "$TMPFILE"
 
 # Log route event
 TS=$(date -u +"%Y-%m-%dT%H:%M:%S.000Z")
-echo "{\"event\":\"route\",\"slug\":\"${SLUG}\",\"ts\":\"${TS}\"}" >> "$HOME/.conductor/manifest.jsonl"
+echo "{\"event\":\"route\",\"slug\":\"${SLUG}\",\"ts\":\"${TS}\"}" >> "$HOME/.channel-routing/manifest.jsonl"
 
 echo "Routed message to '${SLUG}'"

@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# conductor-status.sh — List all sessions with status, reap dead ones
-# Usage: conductor-status.sh
+# cr-status.sh — List all sessions with status, reap dead ones
+# Usage: cr-status.sh
 
-CONDUCTOR_DIR="$HOME/.conductor"
-MANIFEST="$CONDUCTOR_DIR/manifest.jsonl"
+CR_DIR="$HOME/.channel-routing"
+MANIFEST="$CR_DIR/manifest.jsonl"
 
 if [[ ! -f "$MANIFEST" ]]; then
   echo "No sessions found (manifest doesn't exist)"
@@ -47,7 +47,7 @@ done < "$MANIFEST"
 TS=$(date -u +"%Y-%m-%dT%H:%M:%S.000Z")
 for slug in "${!SLUGS[@]}"; do
   if [[ "${STATUS[$slug]:-}" == "running" ]]; then
-    tmux_name="${TMUX_NAMES[$slug]:-conductor-${slug}}"
+    tmux_name="${TMUX_NAMES[$slug]:-cr-${slug}}"
     if ! tmux has-session -t "$tmux_name" 2>/dev/null; then
       STATUS[$slug]="suspended"
       echo "{\"event\":\"suspend\",\"slug\":\"${slug}\",\"reason\":\"tmux_dead\",\"ts\":\"${TS}\"}" >> "$MANIFEST"

@@ -1,17 +1,17 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# conductor-spawn.sh — Create a new child Claude Code session in tmux
-# Usage: conductor-spawn.sh <slug> <cwd> <chat_id> <description> <initial_prompt>
+# cr-spawn.sh — Create a new child Claude Code session in tmux
+# Usage: cr-spawn.sh <slug> <cwd> <chat_id> <description> <initial_prompt>
 
-SLUG="${1:?Usage: conductor-spawn.sh <slug> <cwd> <chat_id> <description> <initial_prompt>}"
+SLUG="${1:?Usage: cr-spawn.sh <slug> <cwd> <chat_id> <description> <initial_prompt>}"
 CWD="${2:?Missing cwd}"
 CHAT_ID="${3:?Missing chat_id}"
 DESC="${4:-}"
 INITIAL_PROMPT="${5:-}"
 
-CONDUCTOR_DIR="$HOME/.conductor"
-TMUX_SESSION="conductor-${SLUG}"
+CR_DIR="$HOME/.channel-routing"
+TMUX_SESSION="cr-${SLUG}"
 CLAUDE_SESSION_ID=$(uuidgen | tr '[:upper:]' '[:lower:]')
 TS=$(date -u +"%Y-%m-%dT%H:%M:%S.000Z")
 
@@ -19,42 +19,42 @@ TS=$(date -u +"%Y-%m-%dT%H:%M:%S.000Z")
 PLUGIN_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 
 # Ensure state directories exist
-mkdir -p "$CONDUCTOR_DIR/sessions/${CLAUDE_SESSION_ID}/hooks"
+mkdir -p "$CR_DIR/sessions/${CLAUDE_SESSION_ID}/hooks"
 
 # Generate child session settings.json with SessionEnd hook
-cat > "$CONDUCTOR_DIR/sessions/${CLAUDE_SESSION_ID}/hooks/settings.json" <<SETTINGS
+cat > "$CR_DIR/sessions/${CLAUDE_SESSION_ID}/hooks/settings.json" <<SETTINGS
 {
   "hooks": {
     "SessionEnd": [{
       "matcher": "*",
       "hooks": [{
         "type": "command",
-        "command": "bash $CONDUCTOR_DIR/sessions/${CLAUDE_SESSION_ID}/hooks/on-stop.sh"
+        "command": "bash $CR_DIR/sessions/${CLAUDE_SESSION_ID}/hooks/on-stop.sh"
       }]
     }]
   },
   "permissions": {
-    "deny": ["Read($HOME/.conductor/**)", "Read($HOME/.claude/channels/**)"]
+    "deny": ["Read($HOME/.channel-routing/**)", "Read($HOME/.claude/channels/**)"]
   }
 }
 SETTINGS
 
 # Generate on-stop.sh for this session
-cat > "$CONDUCTOR_DIR/sessions/${CLAUDE_SESSION_ID}/hooks/on-stop.sh" <<ONSTOP
+cat > "$CR_DIR/sessions/${CLAUDE_SESSION_ID}/hooks/on-stop.sh" <<ONSTOP
 #!/usr/bin/env bash
 set -euo pipefail
 SLUG="${SLUG}"
 TS=\$(date -u +"%Y-%m-%dT%H:%M:%S.000Z")
-echo "{\"event\":\"suspend\",\"slug\":\"\$SLUG\",\"reason\":\"claude_exit\",\"ts\":\"\$TS\"}" >> "$CONDUCTOR_DIR/manifest.jsonl"
+echo "{\"event\":\"suspend\",\"slug\":\"\$SLUG\",\"reason\":\"claude_exit\",\"ts\":\"\$TS\"}" >> "$CR_DIR/manifest.jsonl"
 ONSTOP
-chmod +x "$CONDUCTOR_DIR/sessions/${CLAUDE_SESSION_ID}/hooks/on-stop.sh"
+chmod +x "$CR_DIR/sessions/${CLAUDE_SESSION_ID}/hooks/on-stop.sh"
 
 # Create tmux session
 tmux new-session -d -s "$TMUX_SESSION" -c "$CWD" -x 220 -y 50
 
 # Set environment variables via tmux (not in scrollback)
-tmux set-environment -t "$TMUX_SESSION" CONDUCTOR_SLUG "$SLUG"
-tmux set-environment -t "$TMUX_SESSION" CONDUCTOR_CHAT_ID "$CHAT_ID"
+tmux set-environment -t "$TMUX_SESSION" CR_SLUG "$SLUG"
+tmux set-environment -t "$TMUX_SESSION" CR_CHAT_ID "$CHAT_ID"
 
 # Capture OAuth from macOS keychain (fallback to env)
 OAUTH_TOKEN="${CLAUDE_OAUTH_TOKEN:-}"
@@ -67,7 +67,7 @@ fi
 
 # Launch Claude interactively
 tmux send-keys -t "${TMUX_SESSION}:0.0" \
-  "claude --name ${SLUG} --session-id ${CLAUDE_SESSION_ID} --dangerously-skip-permissions --settings $CONDUCTOR_DIR/sessions/${CLAUDE_SESSION_ID}/hooks/settings.json --plugin-dir ${PLUGIN_ROOT}" Enter
+  "claude --name ${SLUG} --session-id ${CLAUDE_SESSION_ID} --dangerously-skip-permissions --settings $CR_DIR/sessions/${CLAUDE_SESSION_ID}/hooks/settings.json --plugin-dir ${PLUGIN_ROOT}" Enter
 
 # Wait for Claude to start
 sleep 3
@@ -83,6 +83,6 @@ if [[ -n "$INITIAL_PROMPT" ]]; then
 fi
 
 # Append spawn event to manifest
-echo "{\"event\":\"spawn\",\"slug\":\"${SLUG}\",\"desc\":$(printf '%s' "$DESC" | jq -Rs .),\"cwd\":\"${CWD}\",\"tmux\":\"${TMUX_SESSION}\",\"claude_session_id\":\"${CLAUDE_SESSION_ID}\",\"status\":\"running\",\"chat_id\":\"${CHAT_ID}\",\"ts\":\"${TS}\"}" >> "$CONDUCTOR_DIR/manifest.jsonl"
+echo "{\"event\":\"spawn\",\"slug\":\"${SLUG}\",\"desc\":$(printf '%s' "$DESC" | jq -Rs .),\"cwd\":\"${CWD}\",\"tmux\":\"${TMUX_SESSION}\",\"claude_session_id\":\"${CLAUDE_SESSION_ID}\",\"status\":\"running\",\"chat_id\":\"${CHAT_ID}\",\"ts\":\"${TS}\"}" >> "$CR_DIR/manifest.jsonl"
 
 echo "Spawned session '${SLUG}' in tmux '${TMUX_SESSION}' (claude session: ${CLAUDE_SESSION_ID})"

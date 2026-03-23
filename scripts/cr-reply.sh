@@ -1,17 +1,17 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# conductor-reply.sh — Send a message to Telegram via Bot API
-# Usage: conductor-reply.sh <chat_id> <text> [reply_to_message_id]
-# Also reads CONDUCTOR_CHAT_ID from env if chat_id is "-"
+# cr-reply.sh — Send a message to Telegram via Bot API
+# Usage: cr-reply.sh <chat_id> <text> [reply_to_message_id]
+# Also reads CR_CHAT_ID from env if chat_id is "-"
 
-CHAT_ID="${1:?Usage: conductor-reply.sh <chat_id> <text> [reply_to_message_id]}"
+CHAT_ID="${1:?Usage: cr-reply.sh <chat_id> <text> [reply_to_message_id]}"
 TEXT="${2:?Missing text}"
 REPLY_TO="${3:-}"
 
 # Allow "-" to mean "use env var"
 if [[ "$CHAT_ID" == "-" ]]; then
-  CHAT_ID="${CONDUCTOR_CHAT_ID:?CONDUCTOR_CHAT_ID not set}"
+  CHAT_ID="${CR_CHAT_ID:?CR_CHAT_ID not set}"
 fi
 
 # Read bot token from official channel plugin's .env
@@ -54,11 +54,11 @@ fi
 MSG_ID=$(echo "$RESPONSE" | jq -r '.result.message_id')
 
 # Log to messages.jsonl
-CONDUCTOR_DIR="$HOME/.conductor"
-mkdir -p "$CONDUCTOR_DIR"
-SLUG="${CONDUCTOR_SLUG:-orchestrator}"
+CR_DIR="$HOME/.channel-routing"
+mkdir -p "$CR_DIR"
+SLUG="${CR_SLUG:-orchestrator}"
 TS=$(date -u +"%Y-%m-%dT%H:%M:%S.000Z")
 
-echo "{\"id\":${MSG_ID},\"from\":\"claude\",\"session\":\"${SLUG}\",\"text\":$(printf '%s' "$TEXT" | jq -Rs .),\"ts\":\"${TS}\",\"reply_to\":${REPLY_TO:-null}}" >> "$CONDUCTOR_DIR/messages.jsonl"
+echo "{\"id\":${MSG_ID},\"from\":\"claude\",\"session\":\"${SLUG}\",\"text\":$(printf '%s' "$TEXT" | jq -Rs .),\"ts\":\"${TS}\",\"reply_to\":${REPLY_TO:-null}}" >> "$CR_DIR/messages.jsonl"
 
 echo "$MSG_ID"

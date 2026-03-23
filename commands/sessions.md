@@ -1,17 +1,17 @@
 ---
 name: sessions
-description: List all conductor child sessions with their status
+description: List all channel-routing sessions with their status
 ---
 
 # /sessions — List All Sessions
 
-Show all conductor-managed sessions with their current status.
+Show all managed sessions with their current status.
 
 ## Steps
 
 1. Run the status script:
    ```
-   bash ${CLAUDE_PLUGIN_ROOT}/scripts/conductor-status.sh
+   bash ${CLAUDE_PLUGIN_ROOT}/scripts/cr-status.sh
    ```
 
 2. Display the formatted table showing: session slug, status (running/suspended), description, last activity timestamp

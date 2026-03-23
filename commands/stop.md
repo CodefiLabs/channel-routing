@@ -15,7 +15,7 @@ Gracefully shut down a child session by sending /exit and then killing tmux if n
 
 2. Run the stop script:
    ```
-   bash ${CLAUDE_PLUGIN_ROOT}/scripts/conductor-stop.sh "<slug>"
+   bash ${CLAUDE_PLUGIN_ROOT}/scripts/cr-stop.sh "<slug>"
    ```
 
 3. Report: session stopped, status updated to suspended

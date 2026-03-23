@@ -18,12 +18,12 @@ Create a new child Claude Code session running in a tmux window.
    - `--prompt "<text>"` (optional): initial prompt to send to Claude
 
 2. If `--cwd` is not provided, try to infer it:
-   - Check `~/.conductor/projects.json` for a matching project name
+   - Check `~/.channel-routing/projects.json` for a matching project name
    - If not found, use the current working directory
 
 3. Run the spawn script:
    ```
-   bash ${CLAUDE_PLUGIN_ROOT}/scripts/conductor-spawn.sh "<slug>" "<cwd>" "<chat_id>" "<desc>" "<initial_prompt>"
+   bash ${CLAUDE_PLUGIN_ROOT}/scripts/cr-spawn.sh "<slug>" "<cwd>" "<chat_id>" "<desc>" "<initial_prompt>"
    ```
    - `chat_id` comes from the current channel session context (if available) or defaults to empty
 

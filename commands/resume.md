@@ -15,11 +15,11 @@ Resume a previously suspended child session using `claude --resume`.
 
 2. Determine the chat_id:
    - From current channel session context if available
-   - Or from the original spawn event in `~/.conductor/manifest.jsonl`
+   - Or from the original spawn event in `~/.channel-routing/manifest.jsonl`
 
 3. Run the resume script:
    ```
-   bash ${CLAUDE_PLUGIN_ROOT}/scripts/conductor-resume.sh "<slug>" "<chat_id>"
+   bash ${CLAUDE_PLUGIN_ROOT}/scripts/cr-resume.sh "<slug>" "<chat_id>"
    ```
 
 4. Report: session resumed, tmux session name, claude session ID

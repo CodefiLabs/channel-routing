@@ -33,7 +33,11 @@ Telegram reply
 ## Install
 
 ```bash
-claude --plugin-dir /path/to/channel-routing
+# Add the CodefiLabs marketplace
+/plugin marketplace add CodefiLabs/marketplace
+
+# Install the plugin
+/plugin install channel-routing@CodefiLabs/marketplace
 ```
 
 Requires the official [Telegram channel plugin](https://github.com/anthropics/claude-plugins-official/tree/main/external_plugins/telegram) to be configured first.

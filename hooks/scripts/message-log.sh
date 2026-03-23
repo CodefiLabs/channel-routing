@@ -2,11 +2,11 @@
 set -euo pipefail
 
 # message-log.sh — PostToolUse hook for mcp__plugin_telegram_telegram__reply
-# Logs outbound Telegram messages to ~/.conductor/messages.jsonl
+# Logs outbound Telegram messages to ~/.channel-routing/messages.jsonl
 # Receives tool input/output on stdin as JSON
 
-CONDUCTOR_DIR="$HOME/.conductor"
-mkdir -p "$CONDUCTOR_DIR"
+CR_DIR="$HOME/.channel-routing"
+mkdir -p "$CR_DIR"
 
 INPUT=$(cat)
 
@@ -31,7 +31,7 @@ fi
 # Default to 0 if we can't extract an ID
 MSG_ID="${MSG_ID:-0}"
 
-SLUG="${CONDUCTOR_SLUG:-orchestrator}"
+SLUG="${CR_SLUG:-orchestrator}"
 TS=$(date -u +"%Y-%m-%dT%H:%M:%S.000Z")
 
 # Build reply_to field
@@ -41,4 +41,4 @@ if [[ -n "$REPLY_TO" && "$REPLY_TO" != "null" ]]; then
 fi
 
 # Append to messages log
-echo "{\"id\":${MSG_ID},\"from\":\"claude\",\"session\":\"${SLUG}\",\"text\":$(printf '%s' "$TEXT" | jq -Rs .),\"ts\":\"${TS}\",\"reply_to\":${REPLY_TO_JSON}}" >> "$CONDUCTOR_DIR/messages.jsonl"
+echo "{\"id\":${MSG_ID},\"from\":\"claude\",\"session\":\"${SLUG}\",\"text\":$(printf '%s' "$TEXT" | jq -Rs .),\"ts\":\"${TS}\",\"reply_to\":${REPLY_TO_JSON}}" >> "$CR_DIR/messages.jsonl"

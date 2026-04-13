@@ -1,0 +1,29 @@
+{
+  "name": "@codefilabs/channel-routing",
+  "version": "0.2.0",
+  "description": "Route Telegram messages to multiple Claude Code tmux sessions with AI-powered semantic routing.",
+  "files": [
+    "commands/",
+    "hooks/",
+    "scripts/",
+    "skills/",
+    ".claude-plugin/",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CodefiLabs/channel-routing.git"
+  },
+  "homepage": "https://github.com/CodefiLabs/channel-routing",
+  "author": "CodefiLabs",
+  "license": "MIT",
+  "keywords": [
+    "claude",
+    "tmux",
+    "telegram",
+    "ai",
+    "routing",
+    "sessions",
+    "channel"
+  ]
+}

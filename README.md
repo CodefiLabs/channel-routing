@@ -68,7 +68,7 @@ cr status   # Show active/suspended sessions
 | `/cr on\|off\|status` | Toggle routing mode |
 | `/spawn <slug> [--cwd <path>] [--desc "..."] [--prompt "..."]` | Create a child session |
 | `/route <slug> <message>` | Send a message to a session |
-| `/resume <slug>` | Resume a suspended session |
+| `/wakeup <slug>` | Wake up a suspended session |
 | `/stop <slug>` | Stop a session |
 | `/sessions` | List all sessions |
 | `/reply-back <text>` | Send a response to Telegram (used by child sessions) |

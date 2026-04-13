@@ -18,7 +18,7 @@ sleep 30
 if ! tmux has-session -t "$TMUX_SESSION" 2>/dev/null; then
   # Session died — alert via Telegram
   bash "$SCRIPT_DIR/cr-reply.sh" "$CHAT_ID" \
-    "⚠️ Session '${SLUG}' has died. Use /resume to restart it."
+    "⚠️ Session '${SLUG}' has died. Use /wakeup to restart it."
   exit 0
 fi
 

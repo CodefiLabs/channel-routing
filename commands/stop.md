@@ -20,4 +20,4 @@ Gracefully shut down a child session by sending /exit and then killing tmux if n
 
 3. Report: session stopped, status updated to suspended
 
-4. Note: The session's claude_session_id is preserved in the manifest for future `/resume`
+4. Note: The session's claude_session_id is preserved in the manifest for future `/wakeup`

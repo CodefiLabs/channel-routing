@@ -1,9 +1,9 @@
 ---
-name: resume
-description: Resume a suspended child Claude Code session
+name: wakeup
+description: Wake up a suspended child Claude Code session
 ---
 
-# /resume — Resume Suspended Session
+# /wakeup — Wake Up Suspended Session
 
 Resume a previously suspended child session using `claude --resume`.
 

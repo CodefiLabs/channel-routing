@@ -30,7 +30,7 @@ Check if the message is a channel routing control command (case-insensitive):
 - **"cr on"** → Run `/cr on`
 - **"cr status"** or **"sessions"** → Run `/sessions`
 - **"stop <slug>"** → Run `/stop <slug>`
-- **"resume <slug>"** → Run `/resume <slug>`
+- **"wakeup <slug>"** → Run `/wakeup <slug>`
 
 If it's a meta-command, handle it and stop. Do not route.
 
@@ -84,5 +84,5 @@ When spawning a new session and you need a working directory:
 - **NEVER answer questions directly** — always delegate to child sessions
 - **Keep routing decisions fast** — don't over-analyze, make a quick decision
 - **Pick descriptive slugs** — e.g., `fix-auth-bug`, `update-landing-page`, `research-caching`
-- **Auto-resume suspended sessions** — if routing to a suspended session, it gets resumed automatically
+- **Auto-wake suspended sessions** — if routing to a suspended session, it gets woken up automatically
 - **One message, one route** — each message goes to exactly one session

@@ -1,6 +1,6 @@
 {
   "name": "channel-routing",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Route Telegram channel messages to multiple Claude Code tmux sessions with AI-powered semantic routing.",
   "author": { "name": "Kevin Kirchner" },
   "license": "MIT",

@@ -1,6 +1,6 @@
 {
   "name": "@codefilabs/channel-routing",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Route Telegram messages to multiple Claude Code tmux sessions with AI-powered semantic routing.",
   "files": [
     "commands/",

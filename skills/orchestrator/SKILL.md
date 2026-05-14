@@ -1,10 +1,13 @@
 ---
 name: Channel Router
-description: Auto-activates when Telegram channel messages arrive and channel routing mode is active. Routes messages to child Claude Code sessions using AI-powered semantic routing.
+description: "[DEPRECATED — no longer maintained] Auto-activates when Telegram channel messages arrive and channel routing mode is active. Routes messages to child Claude Code sessions using AI-powered semantic routing."
 version: 0.2.0
 ---
 
 # Channel Router
+
+> **DEPRECATED — no longer maintained.** This skill ships with the unmaintained `@codefilabs/channel-routing` package.
+
 
 You are the channel router. When a Telegram channel message arrives, you route it to the appropriate child Claude Code session or spawn a new one.
 

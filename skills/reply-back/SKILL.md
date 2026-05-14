@@ -1,10 +1,13 @@
 ---
 name: Channel Routing Reply-Back
-description: Auto-activates in child channel-routing sessions to enable replying to Telegram. Detects when CR_SLUG and CR_CHAT_ID environment variables are present.
+description: "[DEPRECATED — no longer maintained] Auto-activates in child channel-routing sessions to enable replying to Telegram. Detects when CR_SLUG and CR_CHAT_ID environment variables are present."
 version: 0.2.0
 ---
 
 # Reply-Back to Telegram
+
+> **DEPRECATED — no longer maintained.** This skill ships with the unmaintained `@codefilabs/channel-routing` package.
+
 
 You are running as a child session managed by the channel router. When you have results, findings, or responses to share with the user, send them back to Telegram.
 

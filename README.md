@@ -1,5 +1,8 @@
 # channel-routing
 
+> **DEPRECATED — no longer maintained.**
+> This repo is archived and the npm package `@codefilabs/channel-routing` is no longer maintained.
+
 A Claude Code plugin that routes Telegram messages to multiple parallel Claude Code sessions using AI-powered semantic routing.
 
 Send a message in Telegram. The router reads your intent, finds (or spawns) the right Claude Code session, and injects the message — no channel-picking required.
